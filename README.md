@@ -10,7 +10,7 @@ This repository contains code used for the paper
 - `figure/` contains all scripts to create graphical output and crunch the raw simulation results
 
 All scripts are written in the Julia programming language. You can download the software at https://julialang.org .
-The scripts can be executed out of the box by activating the environment stored in the root folder (`code/Project.toml` file).
+The scripts can be executed out of the box by activating the environment stored in the `code/simulations/Project.toml` file.
 To activate the environment, type in the Julia REPL
 
 ```julia
