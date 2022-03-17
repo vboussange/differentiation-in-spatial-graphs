@@ -1,0 +1,17 @@
+\begin{tabular}{lrr}
+\toprule
+               & \multicolumn{1}{c}{0.01} & \multicolumn{1}{c}{0.50} \\ 
+\cmidrule(lr){2-2} \cmidrule(lr){3-3} 
+               &            \multicolumn{2}{c}{$Q_{ST,u}$}           \\ 
+\cmidrule(lr){2-3} 
+(Intercept)    &                    0.000 &                   -0.000 \\ 
+               &                  (0.009) &                  (0.010) \\ 
+$h_d$          &                -0.449*** &                -0.218*** \\ 
+               &                  (0.013) &                  (0.013) \\ 
+$cl$           &                 0.583*** &                 0.784*** \\ 
+               &                  (0.013) &                  (0.013) \\ 
+\midrule
+Number of sim. &                    1,126 &                    1,126 \\ 
+$R^2$          &                    0.899 &                    0.896 \\ 
+\bottomrule
+\end{tabular}

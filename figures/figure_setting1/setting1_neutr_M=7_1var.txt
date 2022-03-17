@@ -1,0 +1,17 @@
+\begin{tabular}{lrrrrrr}
+\toprule
+               & \multicolumn{1}{c}{0.01} & \multicolumn{1}{c}{0.50} & \multicolumn{1}{c}{0.01} & \multicolumn{1}{c}{0.50} & \multicolumn{1}{c}{0.01} & \multicolumn{1}{c}{0.50} \\ 
+\cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4} \cmidrule(lr){5-5} \cmidrule(lr){6-6} \cmidrule(lr){7-7} 
+               &                                       \multicolumn{4}{c}{$Q_{ST,u}$}                                      &      \multicolumn{2}{c}{$Q_{ST,u} - b \bar{N}$}     \\ 
+\cmidrule(lr){2-5} \cmidrule(lr){6-7} 
+(Intercept)    &                    0.000 &                   -0.000 &                   -0.000 &                   -0.000 &                   -0.000 &                   -0.000 \\ 
+               &                  (0.023) &                  (0.017) &                  (0.023) &                  (0.025) &                  (0.023) &                  (0.028) \\ 
+$cl$           &                 0.739*** &                 0.872*** &                          &                          &                          &                          \\ 
+               &                  (0.023) &                  (0.017) &                          &                          &                          &                          \\ 
+$h_d$          &                          &                          &                -0.753*** &                -0.674*** &                -0.753*** &                -0.143*** \\ 
+               &                          &                          &                  (0.023) &                  (0.025) &                  (0.023) &                  (0.028) \\ 
+\midrule
+Number of sim. &                      853 &                      853 &                      853 &                      853 &                      853 &                      853 \\ 
+$R^2$          &                    0.546 &                    0.760 &                    0.567 &                    0.454 &                    0.567 &                    0.030 \\ 
+\bottomrule
+\end{tabular}
