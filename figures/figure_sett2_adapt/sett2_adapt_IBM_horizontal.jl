@@ -8,13 +8,10 @@ cd(@__DIR__)
 using LightGraphs
 using DataFrames
 using CSV
-using Lathe # one hot encoding, cf https://www.machinelearningplus.com/linear-regression-in-julia/
 using GLM
 using Statistics
-using MLBase
 using JLD2
 using EvoId
-using GlobalSearchRegression
 using Printf
 using Random
 using Polynomials
@@ -273,7 +270,7 @@ gcf()
 
 fig.set_facecolor("None")
 
-_let = ["a","b"]
+_let = [L"\textbf{a}",L"\textbf{b}", L"\textbf{c}", L"\textbf{d}"]
 for (i,ax) in enumerate([ax1,ax3])
     _x = -0.2
     ax.text(_x, 1.0, _let[i],
@@ -287,12 +284,12 @@ for (i,ax) in enumerate([ax1,ax3])
 end
 
 fig.tight_layout()
+display(fig)
 
 fig.savefig("sett2_adapt_IBM_horizontal_$(@sprintf("%1.1f",m)).pdf",
             dpi=1200,
             # bbox_inches = "tight",
             )
-gcf()
 # fig.set_facecolor("None")
 # ax1.set_facecolor("None")
 # ax3.set_facecolor("None")

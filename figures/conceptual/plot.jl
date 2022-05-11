@@ -6,7 +6,7 @@ using JLD2
 using Revise
 using EvoId,LightGraphs,UnPack
 using LaTeXStrings,KernelDensity
-using IDEvol
+# using IDEvol
 using PyPlot,PyCall
 cm_eth = ColorMap([c for c in eth_grad_std.colors]);
 include("../../code/graphs_utils/src/graphs_utils.jl")
@@ -106,7 +106,7 @@ for (i,v) in enumerate(vertex)
     ax_adapt_ins.yaxis.set_label_position("right")
     # ax_adapt_ins.axhline(1.,c = "r", ds = "steps", alpha = 0.8)
     ax_adapt_ins.set_yticks([-0.5,0.5])
-    ytl = ax_adapt_ins.set_yticklabels([L"\theta_\bullet", L"\theta_\bullet"])
+    ytl = ax_adapt_ins.set_yticklabels([L"\theta_\circ", L"\theta_\bullet"])
     plt.setp(ytl[1],backgroundcolor="white",color = "tab:blue")
     plt.setp(ytl[2],color = "tab:red")
 end
@@ -218,7 +218,7 @@ ax_adapt.text(.05, 1.0,"Setting with \n no selection" ,
 ax_neutr.axis("off")
 ax_neutr.margins(0.10)
 
-_let = ["a","b"]
+_let = [L"\textbf{a}",L"\textbf{b}", L"\textbf{c}", L"\textbf{d}"]
 for (i,ax) in enumerate([ax_neutr,ax_adapt])
     ax.text(0., 1.05, _let[i],
         fontsize=12,
@@ -229,12 +229,11 @@ for (i,ax) in enumerate([ax_neutr,ax_adapt])
     )
     # ax.set_xticks(-1.:0.5:1.)
 end
-gcf()
 
 fig.set_facecolor("None")
 # fig.tight_layout()
-gcf()
 
 fig.savefig("conceptual_v3.pdf",
             dpi=1200,
             bbox_inches = "tight")
+display(fig)

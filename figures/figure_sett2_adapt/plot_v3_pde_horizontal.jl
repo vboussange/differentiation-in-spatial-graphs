@@ -20,20 +20,20 @@ include("../format.jl")
 # processing data for heatmap
 x = unique(df_explo.m)
 y = unique(df_explo.rθ)
-betas = zeros(length(x),length(y))
+Q_ST_s = zeros(length(x),length(y))
 pop = zeros(length(x),length(y))
 
 for i in 1:length(x)
     for j in 1:length(y)
         k = findfirst(r -> (r.m == x[i]) && (r.rθ == y[j]),eachrow(df_explo) )
-        # betas[i,j] = df_explo.β[k]
-        betas[i,j] = df_explo.γ[k]
+        Q_ST_s[i,j] = df_explo.Q_ST_s[k]
+        # Q_ST_s[i,j] = df_explo.γ[k]
         pop[i,j] = df_explo.npop[k]
     end
 end
 df_explo_g = groupby(df_explo, :rθ, sort = true)
 rt = sort!(unique(df_explo.rθ))
-pde_data = Dict("m"=>x,"rθ"=>y,"βs"=>betas,"N"=>pop)
+pde_data = Dict("m"=>x,"rθ"=>y,"βs"=>Q_ST_s,"N"=>pop)
 
 # function to obtain arg of local maximum
 function get_types(uend)
@@ -66,7 +66,7 @@ ax3 = fig.add_subplot(py"$(gs)[0:2,1]")
 ax1 = fig.add_subplot(py"$(gs)[0,0]")
 ax2 = fig.add_subplot(py"$(gs)[1,0]")
 
-cbbox1 = mplt.inset_axes(ax3,width = "20%", height = "30%",loc=4)
+cbbox1 = mplt.inset_axes(ax3,width = "20%", height = "32%",loc=4)
 for cbox in [cbbox1]
     cbox.tick_params(axis="both", left=false, top=false, right=false, bottom=false, labelleft=false, labeltop=false, labelright=false, labelbottom=false)
     # [cbox.spines[k].set_visible(false) for k in keys(cbox.spines)]
@@ -81,7 +81,7 @@ pc = ax3.pcolormesh( pde_data["rθ"],pde_data["m"], pde_data["βs"],cmap = cm_et
     # norm = matplotlib.colors.LogNorm()
     )
 _cb = fig.colorbar(pc,cax =cbar1)
-_cb.ax.set_xlabel(L"\beta_s",labelpad = 5)
+_cb.ax.set_xlabel(L"Q_{ST,s}",labelpad = 5, loc="right")
 _cb.ax.xaxis.set_label_position("top")
 # _cb.ax.tick_params(axis="x",direction = "in", labeltop = true)
 # cbar1.xaxis.set_label_position("top")
@@ -153,7 +153,7 @@ end
 ax[2].set_xlabel("Adaptive trait")
 ax[2].legend()
 
-_let = ["a","b","c"]
+_let = [L"\textbf{a}",L"\textbf{b}", L"\textbf{c}", L"\textbf{d}"]
 for (i,ax) in enumerate([ax1,ax2,ax3])
     _x = i < 3 ? -1.4 : -0.2
     _y = i == 2 ? 0.45 : 1.1
@@ -161,7 +161,6 @@ for (i,ax) in enumerate([ax1,ax2,ax3])
         _y,
         _let[i],
         fontsize=12,
-        fontweight="bold",
         va="bottom",
         ha="left",
         transform=ax3.transAxes,

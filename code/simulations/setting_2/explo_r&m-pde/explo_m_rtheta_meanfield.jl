@@ -1,15 +1,47 @@
 cd(@__DIR__)
 name_sim = split(splitpath(@__FILE__)[end],".")[1]
 # name_sim =  "explo_G_2D_discrete_D2_1e-2"
-using DiffEqOperators,LinearAlgebra,LightGraphs,Distributions
-using DifferentialEquations,Random
-using Plots,Printf
-using UnPack,DataFrames,JLD2,Dates,CSV
+using DiffEqOperators, LinearAlgebra, LightGraphs, Distributions
+using DifferentialEquations, Random
+using Plots, Printf
+using UnPack, DataFrames, JLD2, Dates, CSV
 import EvoId:gaussian
-using IDEvol
-# include(pwd()*"/utils.jl")
 simu = true
 df_aggreg = false
+
+
+function αdiv(sol,p)
+    ws = FrequencyWeights.(eachrow(sol))
+    mygrid = p["S"]
+    mean([var(mygrid,w,corrected=false) for w in ws])
+end
+
+function βdiv(sol,p)
+    ws = FrequencyWeights.(eachrow(sol))
+    mygrid = p["S"]
+    var([mean(mygrid,w) for w in ws],corrected=false)
+end
+
+function γdiv(sol,p)
+    ws = FrequencyWeights(vcat((eachrow(sol))...))
+    mygrid = vcat(eachrow(repeat(p["S"]',p["M"],1))...)
+    var(mygrid[:],ws[:],corrected=false)
+end
+
+function popsize(sol,p,loc = false)
+    if size(sol,2) > 1
+        dS = p["dS"]
+        _s = 0.5 .* (sol[:,1] .+ sol[:,end] )
+        _s .+= sum(sol[:,2:end-1],dims=2)[:] .* dS
+        if loc
+             return _s
+         else
+             return sum(_s)
+         end
+    else
+        return sum(sol)
+    end
+end
 
 if simu
     ## Parameters used
@@ -83,6 +115,7 @@ if simu
                         "β" => [],
                         "γ" =>[],
                         "m" => [],
+                        "Q_ST_s" => [],
                         "rθ" => [],
                         "npop" => [])
 
@@ -96,12 +129,12 @@ if simu
             sol = solve(prob)
             uend = copy(sol.u[end])
             # @show popsize(sol,p)
-            push!(df_explo,(uend,αdiv(uend,p),βdiv(uend,p),γdiv(uend,p),p["m"],p["r_θ"],popsize(uend,p)))
+            push!(df_explo,(uend,αdiv(uend,p), βdiv(uend,p), γdiv(uend,p), p["m"], βdiv(uend,p) / (βdiv(uend,p) + αdiv(uend,p)), p["r_θ"], popsize(uend,p)))
         catch e
             println("problem with p = $p")
             println(e)
         end
     end
-    CSV.write("pde_meanfield_data.csv", df_explo[:,[:β, :m, :rθ, :npop]])
+    CSV.write("pde_meanfield_data.csv", df_explo[:,[:Q_ST_s, :m, :rθ, :npop]])
     @save "pde_meanfield_data.jld2" df_explo
 end

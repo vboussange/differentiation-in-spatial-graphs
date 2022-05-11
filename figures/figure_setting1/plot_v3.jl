@@ -338,12 +338,11 @@ gcf()
 ##### 3d figure ##
 ################
 
-_let = ["a","b","c","d"]
+_let = [L"\textbf{a}",L"\textbf{b}", L"\textbf{c}", L"\textbf{d}"]
 for (i,ax) in enumerate([ax1,ax2,ax3,ax4])
     _x = -0.2
     ax.text(_x, 1.05, _let[i],
         fontsize=12,
-        fontweight="bold",
         va="bottom",
         ha="left",
         transform=ax.transAxes ,
@@ -363,6 +362,7 @@ fig.savefig("setting1_neutr_$(suffix)M=$M.pdf",
             dpi=1200,
             bbox_inches = "tight",
             )
+display(fig)
 
 ###########################
 #### printing latex table #
@@ -420,8 +420,6 @@ if true
                 groups = repeat([@sprintf("%1.2f",df.m[1]) for df in df_aggreg_g[idx_m_toplot]],3),
                 number_regressions = false)
 end
-gcf()
-
 
 
 ###########################
