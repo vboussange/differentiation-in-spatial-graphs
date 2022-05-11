@@ -23,7 +23,7 @@ include("../../code/graphs_utils/src/graphs_utils.jl")
 include("../format.jl")
 
 M = 7
-date_sim = "2022-01-13"
+date_sim = "2022-02-26"
 @load "../../code/simulations/setting_2/M=$M/setting_2_mu_01_M=$(M)_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=$(M)_hetero_2_[-onehalf,onehalf]_$(date_sim)_aggreg.jld2" df_aggreg
 
 @load "../../code/graphs_utils/M=7/graph_prop_M=7.jld2" graphs_df

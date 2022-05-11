@@ -167,7 +167,7 @@ axa.set_xlabel("Standardized effect on "*L"Q_{ST,s}")
 gcf()
 
 
-_let = ["a","b"]
+_let = [L"\textbf{a}",L"\textbf{b}", L"\textbf{c}", L"\textbf{d}"]
 for (i,ax) in enumerate([axa,axb])
     _x = -0.2
     ax.text(_x, 1.05, _let[i],

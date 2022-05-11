@@ -56,27 +56,56 @@ function plot_sett1_sett2(ax)
         ax.errorbar(df_mresponse_sett1.m,
                 df_mresponse_sett1[:,"Q_ST_u_mean"],
                 yerr = df_mresponse_sett1[:,"Q_ST_u_std"],
-                c = mapper.to_rgba(log10(0.04)),
+                color = mapper.to_rgba(log10(0.04)),
                 fmt = "o",
                 label = L"Q_{ST,u}"*", sett.\n without selection",
                 ms = 3.)
+        # plotting single points
+        for r in eachrow(df_mresponse_sett1)
+                ax.scatter(fill(r.m, length(r.Q_ST_u_mean)),
+                        r.Q_ST_u_mean,
+                        color = mapper.to_rgba(log10(0.04)),
+                        alpha = 0.1,
+                        marker = "o",
+                        s = 3.
+                        )
+        end
+
         ax.errorbar(df_mresponse_sett2.m,
                 df_mresponse_sett2.Q_ST_u_mean,
                 yerr = df_mresponse_sett2.Q_ST_u_std,
-                c = mapper.to_rgba(log10(0.1)),
-                fmt = "o",
+                color = mapper.to_rgba(log10(0.1)),
+                fmt = "x",
                 label = L"Q_{ST,u}"*", sett.\n with selection",
                 ms = 3.)
-        # axa = ax.twinx()
-        # ax.set_xscale("log")
+        # plotting single points
+        for r in eachrow(df_mresponse_sett2)
+                ax.scatter(fill(r.m, length(r.Q_ST_u_mean)),
+                        r.Q_ST_u_mean,
+                        color = mapper.to_rgba(log10(0.1)),
+                        alpha = 0.1,
+                        marker = "x",
+                        s = 3.
+                        )
+        end
 
         ax.errorbar(df_mresponse_sett2.m,
                 df_mresponse_sett2.Q_ST_s_mean,
                 yerr = df_mresponse_sett2.Q_ST_s_std,
-                c = mapper.to_rgba(log10(1.0)),
-                fmt = "o",
+                color = mapper.to_rgba(log10(1.0)),
+                fmt = "D",
                 label = L"Q_{ST,s}"*", sett.\n with selection",
                 ms = 3.)
+        # plotting single points
+        for r in eachrow(df_mresponse_sett2)
+                ax.scatter(fill(r.m, length(r.Q_ST_s)),
+                        r.Q_ST_s,
+                        color = mapper.to_rgba(log10(1.0)),
+                        alpha = 0.1,
+                        marker = "D",
+                        s = 3.
+                        )
+        end
 end
 
 function plot1(ysym,ylabel,axb;
@@ -88,22 +117,33 @@ function plot1(ysym,ylabel,axb;
                         bboxx = -0.3)
 
     # skipping m=5e-2
-    for df in df_line_rtheta_g[[1,3,4]]
+    # axb.set_yscale("log")
+    fmts = ["o","x","D"]
+    for (i,df) in enumerate(df_line_rtheta_g[[1,3,4]])
         _m = df.m[1]
         x = Float64.(df.rθ); y = Float64.(df[:,ysym*"_mean"])
         p = Polynomials.fit(x,y,1)
         axb.errorbar(x,
                 y,
                 yerr = df[:,ysym*"_std"],
-                c = mapper.to_rgba(log10(_m)),
+                color = mapper.to_rgba(log10(_m)),
                 label = "m = "*(@sprintf "%2.2f" _m),
-                fmt = "o",
+                fmt = fmts[i],
                 ms = 4.)
         axb.plot(x,
-                    p.(x),
-                    c = mapper.to_rgba(log10(_m)),
-                    alpha = 0.5
-                    )
+                p.(x),
+                color = mapper.to_rgba(log10(_m)),
+                alpha = 0.5
+                )
+        # plotting single points
+        for r in eachrow(df)
+                axb.scatter(fill(r.rθ, length(r.Q_ST_u)),
+                        r.Q_ST_u,
+                        color = mapper.to_rgba(log10(_m)),
+                        alpha = 0.1,
+                        marker = fmts[i]
+                        )
+        end
     end
     axb.set_xlabel(L"r_\theta")
     axb.set_ylabel(ylabel)
@@ -318,7 +358,7 @@ gcf()
 
 
 
-_let = ["a","b","c","d"]
+_let = [L"\textbf{a}",L"\textbf{b}", L"\textbf{c}", L"\textbf{d}"]
 for (i,ax) in enumerate([axa,axb,axc,axd])
     _x = -0.2
     ax.text(_x, 1.05, _let[i],
