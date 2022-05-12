@@ -3,9 +3,12 @@ This script plots the last figure of the main text
 
 habitat considered is forest
 
-Results of simulations are plotted in contrast to the other script
+For the script to work, one needs to download 
+- the the temperature rasters `CHELSA_bio1`, available at https://envicloud.wsl.ch/#/?prefix=chelsa%2Fchelsa_V2%2FGLOBAL%2Fclimatologies%2F
+- the habitat rasters, available at https://zenodo.org/record/4058819#.Yn0vmC8Rrop
 
-v2 : bar plot
+Such data must be placed in the folder 
+    `code/graphs_utils/Land2Graph/data`
 =#
 
 # /!\ this script uses PyCall, that relies on python
