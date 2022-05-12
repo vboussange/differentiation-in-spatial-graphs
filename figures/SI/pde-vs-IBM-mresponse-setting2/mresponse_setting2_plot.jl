@@ -6,7 +6,6 @@ using DifferentialEquations,Random
 using Plots,Printf
 using UnPack,DataFrames,JLD2,Dates
 import EvoId:gaussian
-using IDEvol
 using PyPlot
 include("../../format.jl")
 
@@ -26,8 +25,19 @@ ax[1].errorbar(df_toplot_ABM.m,
         label = "IBM simulations",
         fmt = "o",
         ms = 4.)
+# plotting single points
+for r in eachrow(df_toplot_ABM)
+        ax[1].scatter(fill(r.m, length(r.Q_TS_s)),
+                r.Q_TS_s,
+                color = "tab:blue",
+                alpha = .2,
+                marker = "o",
+                s = 7.
+                )
+end
+
 ax[1].plot(df_toplot_PDE.m,
-        df_toplot_PDE.βdiv ./ df_toplot_PDE.γdiv ,
+        df_toplot_PDE.βdiv ./ (df_toplot_PDE.αdiv .+ df_toplot_PDE.βdiv) ,
         label = "PDE result",
         # yerr = df_toplot_var[:,:betas],
         # c = mapper.to_rgba(log10(_m)),
@@ -45,6 +55,17 @@ ax[2].errorbar(df_toplot_ABM.m,
         # label = "IBM simulations",
         fmt = "o",
         ms = 4.)
+# plotting single points
+for r in eachrow(df_toplot_ABM)
+        ax[2].scatter(fill(r.m, length(r.N)),
+                r.N,
+                color = "tab:blue",
+                alpha = .2,
+                marker = "o",
+                s = 7.
+                )
+end
+
 ax[2].plot(df_toplot_PDE.m,
         df_toplot_PDE.popsize,
         # label = "PDE result",

@@ -4,10 +4,9 @@ cd(@__DIR__)
 name_sim = "setting_2_mu_01_M\\=9_complete_hetero_2_\\[-onehalf,onehalf\\]"
 # name_sim = "setting_2_mu_01_M\\=9_ring_hetero_2_\\[-onehalf,onehalf\\]"
 
-# date_sim = "2022-02-27"
-date_sim = "2022-02-21"
+date_sim = "2022-01-11" # t = 1000
+# date_sim = "2022-02-21" # t = 3000
 
-tend = 3000.
 using EvoId,JLD2
 using DataFrames
 using Glob
@@ -22,11 +21,12 @@ for f in flist
         println(e)
     end
 end
+println("tend = ", df_arrays[1].tend[1])
 
 # checking if all .jld2 with different seeds have same number of simulations
 all([ s == size(df_arrays[1], 1) for s in size.(df_arrays, 1)])
 # checking simulation time
-all(vcat([ df.tend .> tend for df in df_arrays]...))
+# all(vcat([ df.tend .> tend for df in df_arrays]...))
 
 # variables that do not need statistics
 vars_nostat = ["m", "μ", "D", "graph", "rθ"]

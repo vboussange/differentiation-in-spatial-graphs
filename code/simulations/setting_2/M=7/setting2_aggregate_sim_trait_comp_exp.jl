@@ -1,6 +1,6 @@
 cd(@__DIR__)
 name_sim = "setting_2_mu_01_M=7_hetero_2_trait_comp_exp"
-date_sim = "2022-03-17"
+date_sim = "2022-01-18"
 tend = 2000.
 using EvoId,JLD2
 using DataFrames
@@ -16,6 +16,7 @@ for f in flist
         println(e)
     end
 end
+println("tend = ", df_arrays[1].tend[1])
 
 # checking if all .jld2 with different seeds have same number of simulations
 all([ s == size(df_arrays[1], 1) for s in size.(df_arrays, 1)])

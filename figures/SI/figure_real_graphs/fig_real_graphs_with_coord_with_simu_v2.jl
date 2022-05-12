@@ -100,7 +100,7 @@ ax1.set_ymargin(0.10)
 pos1 = ax1.imshow(
                 myhab/10,
                 interpolation="nearest",
-                cmap = :Greens,
+                cmap = :Purples,
                 vmin = 0.0,
                 vmax = 100.0,
                 extent=[xmin, xmax, ymin, ymax],
@@ -149,7 +149,7 @@ xmin, ymax = data_src_hab.xy(row + wc[1]*window_size - (window_size-1), col + wc
 xmax, ymin = data_src_hab.xy(row + wc[1]*window_size + 1, col + wc[2]*window_size + 1) 
 # notice that extent is given by coordinates of 0 and window_size + 1 pixel
 pos2 = ax2.imshow(myhab[(wc[1]*window_size - (window_size-1)):(wc[1]*window_size), (wc[2]*window_size - (window_size-1)):(wc[2]*window_size)]/10,
-                cmap = :Greens,
+                cmap = :Purples,
                 origin="upper",
                 vmin = 0.0,
                 vmax = 100.0,
@@ -374,10 +374,11 @@ axa.axes.yaxis.set_visible(true)
 axa.axes.yaxis.set_visible(true)
 axb.axes.yaxis.set_visible(true)
 
-_let = ["a","b", "c", "d"]
+_let = [L"\textbf{a}",L"\textbf{b}", L"\textbf{c}", L"\textbf{d}"]
 for (i,ax) in enumerate([ax2,ax1, axa, axb])
     _x = -0.2
-    ax.text(_x, 1.05, _let[i],
+    _y = ax == ax1 ? 1.22 : 1.05
+    ax.text(_x, _y, _let[i],
         fontsize=12,
         fontweight="bold",
         va="bottom",

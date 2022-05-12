@@ -24,9 +24,9 @@ include("../../../code/graphs_utils/src/graphs_utils.jl")
 
 include("../../format.jl")
 M = 7
-# date_sim = "2022-02-26" #t=3000
-# date_sim = "2022-02-26" #t=2000
 date_sim = "2022-01-18" #t=1000
+# date_sim = "2022-02-26" #t=3000
+# date_sim = "2022-03-17" #t=2000
 
 @load "../../../code/simulations/setting_2/M=$M/setting_2_mu_01_M=$(M)_hetero_2_trait_comp_exp/setting_2_mu_01_M=$(M)_hetero_2_trait_comp_exp_$(date_sim)_aggreg.jld2" df_aggreg
 
@@ -150,6 +150,7 @@ for _df_aggreg in df_aggreg_g_sigmaa
     fig.savefig("setting2_2plots_M=$(M)_sigma_a=$(_df_aggreg.σ_α[1]).pdf",
                 dpi=1200,
                 bbox_inches = "tight")
+    display(fig)
 
     ###########################
     #### printing latex table #

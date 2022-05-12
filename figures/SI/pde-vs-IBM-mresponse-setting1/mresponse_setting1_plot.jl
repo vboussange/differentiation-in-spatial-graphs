@@ -6,7 +6,6 @@ using DifferentialEquations,Random
 using Plots,Printf
 using UnPack,DataFrames,JLD2,Dates
 import EvoId:gaussian
-using IDEvol
 using PyPlot
 include("../../format.jl")
 
@@ -18,7 +17,7 @@ df_toplot_PDE = df_explo#[df_explo.r_θ .== -1, :]
 df_toplot_ABM = df_aggreg
 fig,ax = subplots(1,2,figsize = (FIGSIZE_S[2] * 2.1, FIGSIZE_S[1]), sharex = true)
 
-# Q_TS_u diversity
+# Q_TS_u
 ax[1].errorbar(df_toplot_ABM.m,
         df_toplot_ABM.Q_TS_u_mean,
         yerr = df_toplot_ABM.Q_TS_u_std,
@@ -26,8 +25,19 @@ ax[1].errorbar(df_toplot_ABM.m,
         label = "IBM simulations",
         fmt = "o",
         ms = 4.)
+# plotting single points
+for r in eachrow(df_toplot_ABM)
+        ax[1].scatter(fill(r.m, length(r.Q_TS_u)),
+                r.Q_TS_u,
+                color = "tab:blue",
+                alpha = .2,
+                marker = "o",
+                s = 7.
+                )
+end
+
 ax[1].plot(df_toplot_PDE.m,
-        df_toplot_PDE.βdiv ./ df_toplot_PDE.γdiv ,
+        df_toplot_PDE.βdiv ./ (df_toplot_PDE.αdiv .+ df_toplot_PDE.βdiv) ,
         label = "PDE result",
         # yerr = df_toplot_var[:,:betas],
         # c = mapper.to_rgba(log10(_m)),
@@ -37,7 +47,7 @@ ax[1].plot(df_toplot_PDE.m,
 ax[1].set_xlabel(L"m"); ax[1].set_ylabel(L"Q_{ST,u}");
 gcf()
 
-# beta diversity
+# population size
 ax[2].errorbar(df_toplot_ABM.m,
         df_toplot_ABM.N_mean,
         yerr = df_toplot_ABM.N_std,
@@ -45,6 +55,17 @@ ax[2].errorbar(df_toplot_ABM.m,
         # label = "IBM simulations",
         fmt = "o",
         ms = 4.)
+# plotting single points
+for r in eachrow(df_toplot_ABM)
+        ax[2].scatter(fill(r.m, length(r.N)),
+                r.N,
+                color = "tab:blue",
+                alpha = .2,
+                marker = "o",
+                s = 7.
+                )
+end
+
 ax[2].plot(df_toplot_PDE.m,
         df_toplot_PDE.popsize,
         # label = "PDE result",

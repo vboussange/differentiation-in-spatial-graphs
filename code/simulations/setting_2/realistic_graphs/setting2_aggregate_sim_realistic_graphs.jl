@@ -1,7 +1,7 @@
 cd(@__DIR__)
 name_sim = "setting_2_mu_01_realistic_graphs"
-date_sim = "2022-03-16"
-tend = 1000.
+date_sim = "2022-01-15" #t=2000
+
 using EvoId,JLD2
 using DataFrames
 using Glob
@@ -16,6 +16,7 @@ for f in flist
         println(e)
     end
 end
+println("tend = ", df_arrays[1].tend[1])
 
 # checking if all .jld2 with different seeds have same number of simulations
 all([ s == size(df_arrays[1], 1) for s in size.(df_arrays, 1)])

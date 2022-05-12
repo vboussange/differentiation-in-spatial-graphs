@@ -127,3 +127,5 @@ df = DataFrame("m" => zeros(length(pars)),
 end
 
 @save "betau_vs_K.jld2" df
+using CSV
+CSV.write("betau_vs_K.csv", df[:,Not("graph")])

@@ -26,7 +26,7 @@ include("../../code/graphs_utils/src/graphs_utils.jl")
 include("../format.jl")
 M = 9
 # date_sim = "2022-01-14" # tend = 1000
-date_sim = "2022-02-27" # tend = 3000
+date_sim = "2022-01-14" # tend = 3000
 idx_m_toplot = [1,4]
 
 # M = 7

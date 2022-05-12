@@ -12,6 +12,7 @@ using Printf
 using UnPack,DataFrames,JLD2,Dates
 import EvoId:gaussian
 using IDEvol
+include("pde_utils.jl")
 
 ## Parameters used
 mu= 0.1

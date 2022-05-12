@@ -23,7 +23,7 @@ include("../../code/graphs_utils/src/graphs_utils.jl")
 include("../format.jl")
 
 M = 7
-date_sim = "2022-02-26"
+date_sim = "2022-01-13"
 @load "../../code/simulations/setting_2/M=$M/setting_2_mu_01_M=$(M)_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=$(M)_hetero_2_[-onehalf,onehalf]_$(date_sim)_aggreg.jld2" df_aggreg
 
 @load "../../code/graphs_utils/M=7/graph_prop_M=7.jld2" graphs_df
@@ -167,7 +167,7 @@ end
 ####### plotting ############
 ####################################
 # adding offsets for plotting
-df_ibm_illustr[!,"offsets"] = [[-1.0,0.],[1.3,-1.3],[-1.5,1.5],[-1.5,1.5],[1.,-2.],[0.,-1.5],[0.5,-1.5],[-2.5,0.],] .* 1.3 #last is river
+df_ibm_illustr[!,"offsets"] = [[-1.0,0.],[1.3,-1.1],[-1.5,1.5],[-1.5,1.5],[1.,-2.],[0.,-1.7],[0.5,-1.5],[-2.5,0.],] .* 1.3 #last is river
 
 ## if vertical
 # fig,ax = subplots(2,1,figsize = (FIGSIZE_S[1], FIGSIZE_S[2] * 2),sharex = true)
@@ -178,19 +178,6 @@ ax3 = ax[2]
 
 cbar3 = mplt.inset_axes(ax1,width = "3%", height = "23%",loc=4,bbox_to_anchor = (0., 0.05, 1, 1),bbox_transform=ax1.transAxes )
 # cbar4 = mplt.inset_axes(ax3,width = "3%", height = "23%",loc=4,bbox_to_anchor = (0., 0.05, 1, 1),bbox_transform=ax3.transAxes )
-
-graphs_toplot = OrderedDict("star" => 1,
-                # "lollipop" => 2,
-                "line" => 225,
-                # "flake" => 216,
-                "river 1" => 4,
-                # "river 2" => 9,
-                "complete" => 853,
-                # "bipartite 25" => 19,
-                # "bipartite 34" => 212,
-                # "lattice 4" => 721,
-                "ring" => 422
-                )
 
 _,_mesh = plot_scatter(:rθ,
                         :Q_ST_s_mean,

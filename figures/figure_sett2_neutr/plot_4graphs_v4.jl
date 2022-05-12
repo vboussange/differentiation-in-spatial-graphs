@@ -28,16 +28,16 @@ include("../format.jl")
 
 using CSV
 # data for figure a
-df_mresponse_sett2 = JLD2.load("../../code/simulations/setting_2/M=9/setting_2_mu_01_M=9_complete_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=9_complete_hetero_2_[-onehalf,onehalf]_2022-02-21_aggreg.jld2", "df_aggreg")
-df_mresponse_sett1 = JLD2.load("../../code/simulations/setting_1/M=9/setting_1_mu_01_M=9_complete/setting_1_mu_01_M=9_complete_2022-02-21_aggreg.jld2", "df_aggreg")
+df_mresponse_sett2 = JLD2.load("../../code/simulations/setting_2/M=9/setting_2_mu_01_M=9_complete_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=9_complete_hetero_2_[-onehalf,onehalf]_2022-01-11_aggreg.jld2", "df_aggreg")
+df_mresponse_sett1 = JLD2.load("../../code/simulations/setting_1/M=9/setting_1_mu_01_M=9_complete/setting_1_mu_01_M=9_complete_2022-01-11_aggreg.jld2", "df_aggreg")
 
 # data for figure b
 # df_line_rtheta = JLD2.load("../../code/simulations/setting_2/M=9/setting_2_mu_01_M=9_ring_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=9_ring_hetero_2_[-onehalf,onehalf]_2022-02-21_aggreg.jld2", "df_aggreg")
-df_line_rtheta = JLD2.load("../../code/simulations/setting_2/M=9/setting_2_mu_01_M=9_line_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=9_line_hetero_2_[-onehalf,onehalf]_2022-02-21_aggreg.jld2", "df_aggreg")
+df_line_rtheta = JLD2.load("../../code/simulations/setting_2/M=9/setting_2_mu_01_M=9_line_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=9_line_hetero_2_[-onehalf,onehalf]_2022-01-11_aggreg.jld2", "df_aggreg")
 df_line_rtheta_g = groupby(df_line_rtheta,:m,sort = true)
 # data figure c,d
 M = 7
-date_sim = "2022-02-26"
+date_sim = "2022-01-13"
 @load "../../code/simulations/setting_2/M=$M/setting_2_mu_01_M=$(M)_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=$(M)_hetero_2_[-onehalf,onehalf]_$(date_sim)_aggreg.jld2" df_aggreg
 df_aggreg_g = groupby(df_aggreg,:m,sort=true)
 totsize = size(df_aggreg_g[1],1)
@@ -53,57 +53,86 @@ function plot_sett1_sett2(ax)
         ax.set_ylabel(L"Q_{ST}");
         ax.set_yscale("log")
 
-        ax.errorbar(df_mresponse_sett1.m,
-                df_mresponse_sett1[:,"Q_ST_u_mean"],
+        x = df_mresponse_sett1.m; y = df_mresponse_sett1[:,"Q_ST_u_mean"];
+        ax.errorbar(x,
+                y,
                 yerr = df_mresponse_sett1[:,"Q_ST_u_std"],
-                color = mapper.to_rgba(log10(0.04)),
+                color = "tab:blue",
                 fmt = "o",
+                ms = 1.,
+                elinewidth = 1.)
+        
+        ax.scatter(x,
+                y,
                 label = L"Q_{ST,u}"*", sett.\n without selection",
-                ms = 3.)
+                color = "tab:blue",
+                marker = "o",
+                s = 15.
+                )
         # plotting single points
         for r in eachrow(df_mresponse_sett1)
-                ax.scatter(fill(r.m, length(r.Q_ST_u_mean)),
-                        r.Q_ST_u_mean,
-                        color = mapper.to_rgba(log10(0.04)),
-                        alpha = 0.1,
+                ax.scatter(fill(r.m, length(r.Q_ST_u)),
+                        r.Q_ST_u,
+                        color = "tab:blue",
+                        alpha = 0.2,
                         marker = "o",
-                        s = 3.
+                        s = 5.
                         )
         end
 
-        ax.errorbar(df_mresponse_sett2.m,
-                df_mresponse_sett2.Q_ST_u_mean,
-                yerr = df_mresponse_sett2.Q_ST_u_std,
-                color = mapper.to_rgba(log10(0.1)),
-                fmt = "x",
-                label = L"Q_{ST,u}"*", sett.\n with selection",
-                ms = 3.)
-        # plotting single points
-        for r in eachrow(df_mresponse_sett2)
-                ax.scatter(fill(r.m, length(r.Q_ST_u_mean)),
-                        r.Q_ST_u_mean,
-                        color = mapper.to_rgba(log10(0.1)),
-                        alpha = 0.1,
-                        marker = "x",
-                        s = 3.
-                        )
-        end
-
-        ax.errorbar(df_mresponse_sett2.m,
-                df_mresponse_sett2.Q_ST_s_mean,
+        x = df_mresponse_sett2.m; y = df_mresponse_sett2.Q_ST_s_mean;
+        ax.errorbar(x,
+                y,
                 yerr = df_mresponse_sett2.Q_ST_s_std,
-                color = mapper.to_rgba(log10(1.0)),
-                fmt = "D",
+                color = "tab:red",
+                fmt = "o",
+                ms = 1.,
+                elinewidth = 1.)
+        ax.scatter(x,
+                y,
                 label = L"Q_{ST,s}"*", sett.\n with selection",
-                ms = 3.)
+                color = "tab:red",
+                marker = "D",
+                s = 15.
+                )
         # plotting single points
         for r in eachrow(df_mresponse_sett2)
                 ax.scatter(fill(r.m, length(r.Q_ST_s)),
                         r.Q_ST_s,
-                        color = mapper.to_rgba(log10(1.0)),
-                        alpha = 0.1,
+                        color = "tab:red",
+                        alpha = 0.2,
                         marker = "D",
-                        s = 3.
+                        s = 5.
+                        )
+        end
+
+        x = df_mresponse_sett2.m; y = df_mresponse_sett2.Q_ST_u_mean;
+        ax.errorbar(x,
+                y,
+                yerr = df_mresponse_sett2.Q_ST_u_std,
+                color = "tab:orange",
+                fmt = "o",
+                ms = 1.,
+                elinewidth = 1.,
+                zorder = 10
+                )
+        ax.scatter(x,
+                y,
+                label = L"Q_{ST,u}"*", sett.\n with selection",
+                color = "tab:orange",
+                marker = "x",
+                s = 15.,
+                zorder = 10
+                )
+        # plotting single points
+        for r in eachrow(df_mresponse_sett2)
+                ax.scatter(fill(r.m, length(r.Q_ST_u)),
+                        r.Q_ST_u,
+                        color = "tab:orange",
+                        alpha = 0.2,
+                        marker = "x",
+                        s = 5.,
+                        zorder = 10
                         )
         end
 end
@@ -119,6 +148,7 @@ function plot1(ysym,ylabel,axb;
     # skipping m=5e-2
     # axb.set_yscale("log")
     fmts = ["o","x","D"]
+    cols = ["tab:blue", "tab:orange", "tab:red"]
     for (i,df) in enumerate(df_line_rtheta_g[[1,3,4]])
         _m = df.m[1]
         x = Float64.(df.rθ); y = Float64.(df[:,ysym*"_mean"])
@@ -126,22 +156,30 @@ function plot1(ysym,ylabel,axb;
         axb.errorbar(x,
                 y,
                 yerr = df[:,ysym*"_std"],
-                color = mapper.to_rgba(log10(_m)),
+                color = cols[i],
+                fmt = "o",
+                ms = 1.,
+                elinewidth = 1.)
+        axb.scatter(x,
+                y,
                 label = "m = "*(@sprintf "%2.2f" _m),
-                fmt = fmts[i],
-                ms = 4.)
+                color = cols[i],
+                marker = fmts[i],
+                s = 15.
+                )
         axb.plot(x,
                 p.(x),
-                color = mapper.to_rgba(log10(_m)),
+                color = cols[i],
                 alpha = 0.5
                 )
         # plotting single points
         for r in eachrow(df)
                 axb.scatter(fill(r.rθ, length(r.Q_ST_u)),
                         r.Q_ST_u,
-                        color = mapper.to_rgba(log10(_m)),
-                        alpha = 0.1,
-                        marker = fmts[i]
+                        color = cols[i],
+                        alpha = 0.2,
+                        marker = fmts[i],
+                        s = 7.
                         )
         end
     end
@@ -217,7 +255,7 @@ rθ = df_mresponse_sett2.rθ[1] # rθ
 p = 1; θ=0.5
 mstar = 1. ./ (1 .- rθ ) .* 4 * p * θ^2/(1 + 3*p * θ^2) #critical threshold
 plot_sett1_sett2(axa)
-axa.axvline(mstar,label=L"m^*",linestyle="--" )
+axa.axvline(mstar,label=L"m^*",linestyle="--", zorder = -1)
 axa.legend(framealpha = 1.)
 gcf()
 

@@ -1,0 +1,19 @@
+\begin{tabular}{lrrrr}
+\toprule
+               & \multicolumn{1}{c}{0.10} & \multicolumn{1}{c}{0.50} & \multicolumn{1}{c}{0.10} & \multicolumn{1}{c}{0.50} \\ 
+\cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4} \cmidrule(lr){5-5} 
+               &            \multicolumn{2}{c}{$Q_{ST,s}$}           &            \multicolumn{2}{c}{$Q_{ST,u}$}           \\ 
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} 
+(Intercept)    &                   -0.000 &                   -0.000 &                   -0.000 &                   -0.000 \\ 
+               &                  (0.045) &                  (0.062) &                  (0.041) &                  (0.073) \\ 
+$h_d$          &                -0.206*** &                -0.243*** &                -0.252*** &                -0.280*** \\ 
+               &                  (0.045) &                  (0.063) &                  (0.042) &                  (0.074) \\ 
+$cl$           &                    0.066 &                   0.185* &                 0.885*** &                 0.536*** \\ 
+               &                  (0.051) &                  (0.071) &                  (0.047) &                  (0.083) \\ 
+$r_\theta$     &                 0.854*** &                 0.688*** &                    0.067 &                 0.296*** \\ 
+               &                  (0.051) &                  (0.071) &                  (0.047) &                  (0.083) \\ 
+\midrule
+Number of sim. &                       83 &                       83 &                       83 &                       83 \\ 
+$R^2$          &                    0.840 &                    0.689 &                    0.863 &                    0.578 \\ 
+\bottomrule
+\end{tabular}

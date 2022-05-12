@@ -18,17 +18,17 @@ using Plots:ColorGradient
 using ColorSchemes
 using PyPlot
 cm_eth = ColorMap([c for c in eth_grad_std.colors]);
-include("../../../code/graphs_utils/src/graphs_utils.jl")
+include("../../../../code/graphs_utils/src/graphs_utils.jl")
 # isdir("img") ? nothing : mkdir("img")
 ## graphs prop
 
-include("../../format.jl")
-# date_sim = "2022-01-15" # t = 1000
-date_sim = "2022-02-28"  # t = 3000
+include("../../../format.jl")
+date_sim = "2022-01-15" # t = 1000
+# date_sim = "2022-02-28"  # t = 3000
 # date_sim = "2022-03-16"  # t = 2000
 
 
-@load "../../../code/simulations/setting_2/realistic_graphs/setting_2_mu_01_realistic_graphs/setting_2_mu_01_realistic_graphs_$(date_sim)_aggreg.jld2" df_aggreg
+@load "../../../../code/simulations/setting_2/realistic_graphs/setting_2_mu_01_realistic_graphs/setting_2_mu_01_realistic_graphs_$(date_sim)_aggreg.jld2" df_aggreg
 df_aggreg_g = groupby(df_aggreg,:m,sort=true)
 
 idx_m_toplot = [1,4] #idx to display results, for simu 01-15

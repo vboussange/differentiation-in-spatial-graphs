@@ -17,6 +17,7 @@ for f in flist
         println(e)
     end
 end
+println("tend = ", df_arrays[1].tend[1])
 
 # checking if all .jld2 with different seeds have same number of simulations
 all([ s == size(df_arrays[1], 1) for s in size.(df_arrays, 1)])
@@ -37,6 +38,15 @@ using ProgressMeter
 mtemp = [df[:,vars] |> Matrix for df in df_arrays]
 _stats = hcat(df_arrays[1][:,vars_nostat] |> Matrix, mean(mtemp), std(mtemp))
 df_aggreg = DataFrame(_stats,[vars_nostat; vars.*"_mean"; vars.*"_std"])
+
+# storing single points
+for (i,v) in enumerate(vars)
+    v_all = []
+    for j in 1:size(mtemp[1],1)
+        push!(v_all, [m[j,i] for m in mtemp])
+    end
+    df_aggreg[!,v] = v_all
+end
 
 # filtering nan etcs
 for v in vars.*"_mean"

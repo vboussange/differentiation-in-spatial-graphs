@@ -27,7 +27,6 @@ df_aggreg_t1000_set1 = load("../../../code/simulations/setting_1/M=$M/setting_1_
 df_aggreg_t2000_set1 = load("../../../code/simulations/setting_1/M=$M/setting_1_mu_01_M=$(M)/setting_1_mu_01_M=$(M)_2022-02-16_aggreg.jld2", "df_aggreg")
 df_aggreg_t1000_set2 = load("../../../code/simulations/setting_2/M=$M/setting_2_mu_01_M=7_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=7_hetero_2_[-onehalf,onehalf]_2022-01-13_aggreg.jld2", "df_aggreg")
 df_aggreg_t2000_set2 = load("../../../code/simulations/setting_2/M=$M/setting_2_mu_01_M=7_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=7_hetero_2_[-onehalf,onehalf]_2022-02-18_aggreg.jld2", "df_aggreg")
-df_aggreg_t3000_set2 = load("../../../code/simulations/setting_2/M=$M/setting_2_mu_01_M=7_hetero_2_[-onehalf,onehalf]/setting_2_mu_01_M=7_hetero_2_[-onehalf,onehalf]_2022-02-26_aggreg.jld2", "df_aggreg")
 
 
 fig,axs = subplots(2,2,figsize = (FIGSIZE_S[2] * 2.1, FIGSIZE_S[1].*2))
@@ -273,7 +272,7 @@ gcf()
 [ax.set_xticks([-0.5,0.,0.5]) for ax in axs]
 [ax.set_xlim([-1.,1.]) for ax in axs]
 
-_let = ["a","b","c"]
+_let = [L"\textbf{a}",L"\textbf{b}", L"\textbf{c}", L"\textbf{d}"]
 for (i,ax) in enumerate([axa,axb,axc])
     _x = -0.2
     ax.text(_x, 1.05, _let[i],

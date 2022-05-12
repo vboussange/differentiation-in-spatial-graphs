@@ -12,11 +12,12 @@ using DifferentialEquations,Random
 using Plots,Printf
 using UnPack,DataFrames,JLD2,Dates
 import EvoId:gaussian
-using IDEvol
 using PyPlot
 using KernelDensity
 using EvoId
 include("../../format.jl")
+include("../../../code/analytics/pde_utils.jl")
+
 cm_eth = ColorMap([c for c in eth_grad_std.colors])
 
 function _scale(x)
@@ -83,72 +84,71 @@ b(X,t) = 1f0
 NMax = 3000
 # tend = 1.5
 D = [nothing, fill(D2,dim_neutr)]
-t_saving_cb = collect(range(0.f0,tend,length=300))
+t_saving_cb = collect(range(0.f0,tend,length=100))
 
-if false
-    function sim(m)
-        mu = [m,fill(1f-1,dim_neutr)]
-        Δ_x = Float32.(m * rw_laplacian_matrix(g))
-        #############################
-        ########### PDE #############
-        #############################
-        # this function is called to evaluate the convolution of local u and alpha evaluated at S[i]
-        function int_u(u::T,p::Dict) where T <: AbstractArray
-                @unpack N,S,dS = p
-                C = 0.5 * (u[1] + u[N])
-                C += sum(u[2:N-1])
-                return C*dS
-        end
-        lux = similar(u0);
-        lus = similar(u0);
-        # non linear term, i.e. the logistic summand of the IDE
-        function f(du,u,p,t)
-            @unpack N,M,S,dS,X,m,Δ_s= p
-            u[u[:,:] .< eps()] .= 0
-            B_i = B.(X,S')
-            for i in 1:M
-                u_i = @view u[i,:]
-                C_i = int_u((u_i), p)
-                # here there is no b (1-m) because the -m is included in the laplacian
-                du[i,:] .= u_i .* (B_i[i,:] .- C_i / K1  )
-            end
-            mul!(lux, Δ_x', (u .* B_i))
-            mul!(lus, u .* B_i, Δ_s )
-            @. du = du - lux + lus
-            return du
-        end
-        #
-        p_default_pde = Dict{String,Any}()
-        @pack! p_default_pde = M,S,dS,N,Δ_s,X,m
-
-        #test
-        if false
-            prob = ODEProblem(f,u0,tspan,p_default_pde)
-            @time sol = solve(prob)
-            Plots.plot(S,sol.u[end][1,:])
-        end
-        prob = ODEProblem(f,u0,tspan,p_default_pde)
-        sol = solve(prob)
-
-        #############################
-        ########### IBM #############
-        #############################
-
-        function cb(w)
-                Dict(
-                    "alphau" => get_alpha_div(w,2),
-                    "betau" => get_beta_div(w,2),
-                    "gammau" => mean(var(w,trait=2)),
-                    "N" => size(w))
-        end
-        myagents = [Agent(myspace, [[xpos], D[2] .* randn(Float32,dim_neutr)]) for xpos in rand(1:M,M*Int(K1))]
-        w0 = World(myagents, myspace, D, mu, NMax, 0.)
-        @time s = run!(w0,Gillepsie(),tend,b,d,dt_saving = 5f0);
-        return s, sol
+function sim(m)
+    mu = [m,fill(1f-1,dim_neutr)]
+    Δ_x = Float32.(m * rw_laplacian_matrix(g))
+    #############################
+    ########### PDE #############
+    #############################
+    # this function is called to evaluate the convolution of local u and alpha evaluated at S[i]
+    function int_u(u::T,p::Dict) where T <: AbstractArray
+            @unpack N,S,dS = p
+            C = 0.5 * (u[1] + u[N])
+            C += sum(u[2:N-1])
+            return C*dS
     end
+    lux = similar(u0);
+    lus = similar(u0);
+    # non linear term, i.e. the logistic summand of the IDE
+    function f(du,u,p,t)
+        @unpack N,M,S,dS,X,m,Δ_s= p
+        u[u[:,:] .< eps()] .= 0
+        B_i = B.(X,S')
+        for i in 1:M
+            u_i = @view u[i,:]
+            C_i = int_u((u_i), p)
+            # here there is no b (1-m) because the -m is included in the laplacian
+            du[i,:] .= u_i .* (B_i[i,:] .- C_i / K1  )
+        end
+        mul!(lux, Δ_x', (u .* B_i))
+        mul!(lus, u .* B_i, Δ_s )
+        @. du = du - lux + lus
+        return du
+    end
+    #
+    p_default_pde = Dict{String,Any}()
+    @pack! p_default_pde = M,S,dS,N,Δ_s,X,m
+
+    #test
+    if false
+        prob = ODEProblem(f,u0,tspan,p_default_pde)
+        @time sol = solve(prob)
+        Plots.plot(S,sol.u[end][1,:])
+    end
+    prob = ODEProblem(f,u0,tspan,p_default_pde)
+    sol = solve(prob)
+
+    #############################
+    ########### IBM #############
+    #############################
+
+    function cb(w)
+            Dict(
+                "alphau" => get_alpha_div(w,2),
+                "betau" => get_beta_div(w,2),
+                "gammau" => mean(var(w,trait=2)),
+                "N" => size(w))
+    end
+    myagents = [Agent(myspace, [[xpos], D[2] .* randn(Float32,dim_neutr)]) for xpos in rand(1:M,M*Int(K1))]
+    w0 = World(myagents, myspace, D, mu, NMax, 0.)
+    @time s = run!(w0,Gillepsie(),tend,b,d,dt_saving = 10f0);
+    return s, sol
+end
     # @time s = run!(w0,Gillepsie(),tend,b,d,cb=cb,t_saving_cb = copy(t_saving_cb),dt_saving = 1.0);
 
-
+if true
     # migration regimes plotted
     m1 = 0.1f0
     m2 = 0.8f0
@@ -229,8 +229,8 @@ for (j,i) in enumerate([0,1])
     gcf()
 end
 ax[1].set_title("PDE simulation")
-ax[3 ].set_title("IBM simulation")
-ax[2 ].set_xlabel("Time");ax[4].set_xlabel("Time")
+ax[3].set_title("IBM simulation")
+ax[2].set_xlabel("Time");ax[4].set_xlabel("Time")
 
 fig.savefig("pde-vs-IBM-trans-setting1_localpop.pdf",
             dpi=500,

@@ -12,11 +12,12 @@ using DifferentialEquations,Random
 using Plots,Printf
 using UnPack,DataFrames,JLD2,Dates
 import EvoId:gaussian
-using IDEvol
 using PyPlot
 using KernelDensity
 using EvoId
 include("../../format.jl")
+include("../../../code/analytics/pde_utils.jl")
+
 cm_eth = ColorMap([c for c in eth_grad_std.colors])
 
 function _scale(x)

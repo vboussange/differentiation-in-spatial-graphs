@@ -7,7 +7,6 @@ using JLD2
 using Revise
 using EvoId,LightGraphs,UnPack
 using LaTeXStrings, Printf
-using IDEvol
 using PyPlot
 include("../../format.jl")
 Line2D = matplotlib.lines.Line2D
@@ -21,18 +20,22 @@ sort!(df,:K1)
 df[!,"Q_ST_u"] = similar(df.betau)
 df[!,"Q_ST_s"] = similar(df.betas)
 
-[r.Q_ST_u = r.betau ./ r.gammau for r in eachrow(df)]
-[r.Q_ST_s = r.betas ./ r.gammas for r in eachrow(df)]
+[r.Q_ST_u = r.betau ./ (r.betau + r.alphau ) for r in eachrow(df)]
+[r.Q_ST_s = r.betas ./ (r.betas + r.alphas ) for r in eachrow(df)]
 
 plt.clf()
 fig, axs = plt.subplots(1,3,figsize=(FIGSIZE_M[1]*2,FIGSIZE_M[2]*0.8))
 
 # first row corresponds to K=10 for which there is too much stochasticity
-axs[1].boxplot(df.Q_ST_u)
+axs[1].boxplot(df.Q_ST_u, showfliers=false)
+[axs[1].scatter(fill(i, length(pts)),pts, color = "black", alpha = 0.2, s = 7.) for (i,pts) in enumerate(df.Q_ST_u)] 
 axs[1].set_ylabel( L"Q_{ST,u}")
-axs[2].boxplot(df.Q_ST_s)
+axs[2].boxplot(df.Q_ST_s, showfliers=false)
+[axs[2].scatter(fill(i, length(pts)),pts, color = "black", alpha = 0.2, s = 7.) for (i,pts) in enumerate(df.Q_ST_s)] 
 axs[2].set_ylabel( L"Q_{ST,s}");
-axs[3].boxplot(df.N)
+axs[3].boxplot(df.N, showfliers=false)
+[axs[3].scatter(fill(i, length(pts)),pts, color = "black", alpha = 0.2, s = 7.) for (i,pts) in enumerate(df.N)] 
+
 axs[3].set_ylabel( L"N");
 [ax.set_xlabel("K") for ax in axs]
 

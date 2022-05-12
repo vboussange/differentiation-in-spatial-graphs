@@ -106,9 +106,9 @@ for (i,v) in enumerate(vertex)
     ax_adapt_ins.yaxis.set_label_position("right")
     # ax_adapt_ins.axhline(1.,c = "r", ds = "steps", alpha = 0.8)
     ax_adapt_ins.set_yticks([-0.5,0.5])
-    ytl = ax_adapt_ins.set_yticklabels([L"\theta_\circ", L"\theta_\bullet"])
+    ytl = ax_adapt_ins.set_yticklabels([L"\theta_\bcirc", L"\theta_\rcirc"])
     plt.setp(ytl[1],backgroundcolor="white",color = "tab:blue")
-    plt.setp(ytl[2],color = "tab:red")
+    plt.setp(ytl[2], color = "tab:red")
 end
 
 # ax_adapt_ins.

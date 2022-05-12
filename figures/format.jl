@@ -20,8 +20,8 @@ rcParams["text.latex.preamble"] = ["\\usepackage{nicefrac}",
                                     "\\sansmath",
                                     "\\usepackage{mathtools}",
                                     "\\usepackage{xcolor}",
-                                    "\\newcommand\\rcirc{{\\color{red}\\bullet}\\mathllap{\\color{red}\\circ}}",
-                                    "\\newcommand\\bcirc{{\\color{blue}\\bullet}\\mathllap{\\color{blue}\\circ}}"
+                                    "\\newcommand\\rcirc{\\textbf{II}}",
+                                    "\\newcommand\\bcirc{\\textbf{I}}"
                                     ]
 rcParams["font.size"] = 8
 @show rcParams["font.size"]

@@ -12,7 +12,7 @@ with varying radius and screening window size
 2021-12-30: tend = 500, missed m = 1e0
 2022-01-XX: tend = 1000, included m = 1e0
 2022-02-XX: tend = 3000, included m = 1e0
-
+2022-03-16: tend = 2000
 =# 
 
 using Random
