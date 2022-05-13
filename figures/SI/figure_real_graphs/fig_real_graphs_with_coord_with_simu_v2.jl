@@ -1,26 +1,30 @@
 #=
-This script plots the last figure of the main text
+This script plots the figure illustrating simulations on real graphs.
+Real graphs are generated from habitat raster centered on the Hengduan mountains.
 
-habitat considered is forest
+Habitat considered is forest.
 
-For the script to work, one needs to download 
-- the the temperature rasters `CHELSA_bio1`, available at https://envicloud.wsl.ch/#/?prefix=chelsa%2Fchelsa_V2%2FGLOBAL%2Fclimatologies%2F
-- the habitat rasters, available at https://zenodo.org/record/4058819#.Yn0vmC8Rrop
+For the script to work, one needs to download the raster files containing habitat and temperature data:
+- the temperature rasters `CHELSA_bio1.tif`, 
+can be found at https://envicloud.wsl.ch/#/?prefix=chelsa%2Fchelsa_V2%2FGLOBAL%2Fclimatologies%2F
+- the habitat raster for forest, `iucn_habitatclassification_fraction_lvl1__100_Forest__ver004.tif`,
+can be found at at https://zenodo.org/record/4058819#.Yn0vmC8Rrop
 
-Such data must be placed in the folder 
-    `code/graphs_utils/Land2Graph/data`
+The .tif files must be placed in the folder `code/graphs_utils/Land2Graph/data`
+
+/!\ this script uses PyCall, that relies on python
+Make sure to install Python, as well as the packages
+"cartopy", "rasterio", "networkx", "matplotlib", "shapely".
+Then uncomment the two following lines, making sure to direct
+ENV["PYTHON"] your your python installation (see https://github.com/JuliaPy/PyCall.jl)
+for more explanations.
+Those two lines can be uncommented after the first usepackag
+
+```julia
+ENV["PYTHON"] = "/usr/local/anaconda3/envs/land2graph/bin/python"
+using Pkg; Pkg.build("PyCall")
+```
 =#
-
-# /!\ this script uses PyCall, that relies on python
-# Make sure to install Python, as well as the packages
-# "cartopy", "rasterio", "networkx", "matplotlib", "shapely".
-# Then uncomment the two following lines, making sure to direct
-# ENV["PYTHON"] your your python installation (see https://github.com/JuliaPy/PyCall.jl)
-# for more explanations.
-# Those two lines can be uncommented after the first usepackage
-
-# ENV["PYTHON"] = "/usr/local/anaconda3/envs/land2graph/bin/python"
-# using Pkg; Pkg.build("PyCall")
 
 using PyCall
 using Printf
