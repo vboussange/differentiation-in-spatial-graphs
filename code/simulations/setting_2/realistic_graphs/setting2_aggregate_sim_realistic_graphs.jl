@@ -1,6 +1,6 @@
 cd(@__DIR__)
 name_sim = "setting_2_mu_01_realistic_graphs"
-date_sim = "2022-01-15" #t=2000
+date_sim = "2022-01-15" #t=1000
 
 using EvoId,JLD2
 using DataFrames

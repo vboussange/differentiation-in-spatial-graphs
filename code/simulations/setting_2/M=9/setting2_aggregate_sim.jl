@@ -1,11 +1,10 @@
 cd(@__DIR__)
-# name_sim = "setting_2_mu_01_M\\=9_hetero_2_\\[-onehalf,onehalf\\]"
+name_sim = "setting_2_mu_01_M\\=9_hetero_2_\\[-onehalf,onehalf\\]"
+date_sim = "2022-01-14" # t = 1000
 # name_sim = "setting_2_mu_01_M\\=9_line_hetero_2_\\[-onehalf,onehalf\\]"
-name_sim = "setting_2_mu_01_M\\=9_complete_hetero_2_\\[-onehalf,onehalf\\]"
+# name_sim = "setting_2_mu_01_M\\=9_complete_hetero_2_\\[-onehalf,onehalf\\]"
+# date_sim = "2022-01-11" # t = 1000
 # name_sim = "setting_2_mu_01_M\\=9_ring_hetero_2_\\[-onehalf,onehalf\\]"
-
-date_sim = "2022-01-11" # t = 1000
-# date_sim = "2022-02-21" # t = 3000
 
 using EvoId,JLD2
 using DataFrames
