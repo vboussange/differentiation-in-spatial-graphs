@@ -11,7 +11,6 @@ using DifferentialEquations,Random
 using Printf
 using UnPack,DataFrames,JLD2,Dates
 import EvoId:gaussian
-using IDEvol
 include("pde_utils.jl")
 
 ## Parameters used
@@ -94,7 +93,7 @@ println("beta diversity is :", βdiv(uend,p_default))
 
 df = DataFrame("uend" => [], "rθ" => Float64[], "m" => Float64[], "N" => Float64[], "β" => Float64[], "s1" => Float64[])
 ms = range(0., 1., length=20)
-rts = [-0.5, 0.5]
+rts = [-0.5, 0.4]
 for m in ms, rt in rts
     p = copy(p_default)
     p["m"] = m

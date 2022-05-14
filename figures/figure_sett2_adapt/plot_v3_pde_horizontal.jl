@@ -33,7 +33,7 @@ for i in 1:length(x)
 end
 df_explo_g = groupby(df_explo, :rθ, sort = true)
 rt = sort!(unique(df_explo.rθ))
-pde_data = Dict("m"=>x,"rθ"=>y,"βs"=>Q_ST_s,"N"=>pop)
+pde_data = Dict("m"=>x,"rθ"=>y,"Q_ST_s"=>Q_ST_s,"N"=>pop)
 
 # function to obtain arg of local maximum
 function get_types(uend)
@@ -75,7 +75,7 @@ for cbox in [cbbox1]
 end
 cbar1 = mplt.inset_axes(cbbox1, "8%", "50%", loc = 7)
 
-pc = ax3.pcolormesh( pde_data["rθ"],pde_data["m"], pde_data["βs"],cmap = cm_eth,
+pc = ax3.pcolormesh( pde_data["rθ"],pde_data["m"], pde_data["Q_ST_s"],cmap = cm_eth,
     # extent=[1,tend,S[1],S[end]]
     # vmax = K1
     # norm = matplotlib.colors.LogNorm()

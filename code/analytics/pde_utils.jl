@@ -2,6 +2,7 @@
 Contains functions to calculate population size and differentiation metrics
 from PDE solutions.
 =#
+using StatsBase
 function αdiv(sol,p)
     ws = FrequencyWeights.(eachrow(sol))
     mygrid = p["S"]
