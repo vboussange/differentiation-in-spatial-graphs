@@ -2,7 +2,7 @@
 
 This repository contains code used for the paper 
 
-> *Neutral and adaptive differentiation in spatial graphs*, Boussange, V. & Pellissier, L. (2022)
+> *Eco-evolutionary model on spatial graphs reveals how habitat structure affects phenotypic differentiation*, Boussange, V. & Pellissier, L. (2022)
 
 - `code/` contains all scripts related to the simulation runs
     - `graph_utils` contains scripts to calculate graph properties
