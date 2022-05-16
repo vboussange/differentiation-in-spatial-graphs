@@ -92,7 +92,7 @@ axb.barh(3 .+ collect(0.2 .* (1:2) .- 0.4),
         )
 axb.vlines(0., 0.4, 3.4, colors="grey", linestyles = "--", label = "")
 axb.set_yticks(1:3)
-axb.set_yticklabels([L"h_d",L"\langle l \rangle", L"r_\theta"],fontsize=12)
+axb.set_yticklabels([L"h_d",L"\langle l \rangle", L"r_\Theta"],fontsize=12)
 # axb.legend()
 axb.set_xlabel("Standardized effect on "*L"Q_{ST,u}")
 gcf()
@@ -156,7 +156,7 @@ axa.barh(3 .+ collect(0.2 .* (1:2) .- 0.4),
         )
 axa.vlines(0., 0.4, 3.4, colors="grey", linestyles = "--", label = "")
 axa.set_yticks(1:3)
-axa.set_yticklabels([L"h_d",L"\langle l \rangle", L"r_\theta"],fontsize=12)
+axa.set_yticklabels([L"h_d",L"\langle l \rangle", L"r_\Theta"],fontsize=12)
 axa.legend(loc="upper left")
 axa.set_xlabel("Standardized effect on "*L"Q_{ST,s}")
 

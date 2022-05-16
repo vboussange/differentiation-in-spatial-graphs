@@ -52,16 +52,18 @@ df_ibm_illustr.bar_N = df_ibm_illustr.N_mean ./ 7
 
 # making sure that pde and ibm data are from similar migration regime
 @assert df_ibm.m[1] ≈ df_pde.m[1]
-@assert df_ibm.m[1] ≈ df_ibm_illustr.m[1]
+if m < 0.3 
+    @assert df_ibm.m[1] ≈ df_ibm_illustr.m[1]# graphs not plotted for m not 0.1
 
-# merging df_ibm_illustr and df_ibm, making sure that graphs are not counted twice
-for r in eachrow(df_ibm_illustr)
-    _arg = findfirst((r.rθ .== df_ibm.rθ) .& (Ref(r.graph) .== df_ibm.graph))
-    if isnothing(_arg)
-        println("adding graph", r.graph)
-        append!(df_ibm, r |>DataFrame)
-    else #replacing values, to make sure that df_ibm and df_ibm_illustr are coherent
-        df_ibm[_arg,:] = r
+    # merging df_ibm_illustr and df_ibm, making sure that graphs are not counted twice
+    for r in eachrow(df_ibm_illustr)
+        _arg = findfirst((r.rθ .== df_ibm.rθ) .& (Ref(r.graph) .== df_ibm.graph))
+        if isnothing(_arg)
+            println("adding graph", r.graph)
+            append!(df_ibm, r |>DataFrame)
+        else #replacing values, to make sure that df_ibm and df_ibm_illustr are coherent
+            df_ibm[_arg,:] = r
+        end
     end
 end
 
@@ -181,7 +183,7 @@ cbar3 = mplt.inset_axes(ax1,width = "3%", height = "23%",loc=4,bbox_to_anchor = 
 
 _,_mesh = plot_scatter(:rθ,
                         :Q_ST_s_mean,
-                        L"r_\theta",
+                        L"r_\Theta",
                         L"Q_{ST,s}",
                         @sprintf("%1.1f",m),
                         ax = ax1,
@@ -211,7 +213,7 @@ _cb.set_label("graph density",fontsize =8)
 # _cb.ax.xaxis.set_label_position("top")
 cbar3.yaxis.set_ticks_position("none") 
 cbar3.yaxis.set_label_position("left")
-ax1.set_xlabel(L"r_\theta")
+ax1.set_xlabel(L"r_\Theta")
 gcf()
 
 #####################################
@@ -219,7 +221,7 @@ gcf()
 ####################################
 _,_mesh = plot_scatter(:rθ,
                         :bar_N,
-                        L"r_\theta",
+                        L"r_\Theta",
                         L"\bar{N}",
                         @sprintf("%1.1f",m),
                         ax = ax3,

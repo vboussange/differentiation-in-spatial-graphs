@@ -6,7 +6,7 @@ include("../../../code/graphs_utils/src/graphs_utils.jl")
 include("../../format.jl")
 
 fig, axx = plt.subplots(2,3,figsize=(FIGSIZE_L[1],FIGSIZE_L[2]*0.6))
-labels = ["a","b","c","d","e","f"]
+_let = [L"\textbf{a}",L"\textbf{b}", L"\textbf{c}", L"\textbf{d}", L"\textbf{e}", L"\textbf{f}"]
 gxs = vcat( [LightGraphs.grid([2,2,2]) for _ in 1:3],# seed = 2
     [LightGraphs.grid([8,1],periodic=true) for _ in 1:2], # seed = 2
     [SimpleGraph(Edge.([(1,2), (2,3),(2,4),(4,5),(5,8),(5,6),(6,7),(7,8),(5,7),(6,8)]))],
@@ -50,9 +50,9 @@ for i in 1:length(θs)
     nx.draw_networkx_edges(gx, pos, alpha=0.5, width=4,ax=ax)
     ax.margins(0.11)
     ax.axis("off")
-    ax.set_title(L"r_\theta = "*(@sprintf "%1.2f" soptim_correlation(g,soptim)),
+    ax.set_title(L"r_\Theta = "*(@sprintf "%1.2f" soptim_correlation(g,soptim)),
                 y = -0.1)
-    ax.text(0, 1, labels[i], fontweight="bold", va="bottom", ha="left",
+    ax.text(0, 1, labels[i], va="bottom", ha="left",
         fontsize=12,
         transform=ax.transAxes ,
         )

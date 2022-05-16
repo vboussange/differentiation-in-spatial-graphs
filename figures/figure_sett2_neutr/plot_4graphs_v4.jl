@@ -64,7 +64,7 @@ function plot_sett1_sett2(ax)
         
         ax.scatter(x,
                 y,
-                label = L"Q_{ST,u}"*", sett.\n without selection",
+                label = L"Q_{ST,u}"*", no \nselection",
                 color = "tab:blue",
                 marker = "o",
                 s = 15.
@@ -90,7 +90,7 @@ function plot_sett1_sett2(ax)
                 elinewidth = 1.)
         ax.scatter(x,
                 y,
-                label = L"Q_{ST,s}"*", sett.\n with selection",
+                label = L"Q_{ST,s}"*", heterog. \nselection",
                 color = "tab:red",
                 marker = "D",
                 s = 15.
@@ -118,7 +118,7 @@ function plot_sett1_sett2(ax)
                 )
         ax.scatter(x,
                 y,
-                label = L"Q_{ST,u}"*", sett.\n with selection",
+                label = L"Q_{ST,u}"*", heterog. \nselection",
                 color = "tab:orange",
                 marker = "x",
                 s = 15.,
@@ -183,7 +183,7 @@ function plot1(ysym,ylabel,axb;
                         )
         end
     end
-    axb.set_xlabel(L"r_\theta")
+    axb.set_xlabel(L"r_\Theta")
     axb.set_ylabel(ylabel)
     if !isnothing(legend)
         axb.legend(#bbox_to_anchor=(bboxx,0.6)
@@ -320,7 +320,7 @@ axd.barh(3 .+ collect(0.2 .* (1:2) .- 0.4),
         )
 axd.vlines(0., 0.4, 3.4, colors="grey", linestyles = "--", label = "")
 axd.set_yticks(1:3)
-axd.set_yticklabels([L"h_d",L"\langle l \rangle", L"r_\theta"],fontsize=12)
+axd.set_yticklabels([L"h_d",L"\langle l \rangle", L"r_\Theta"],fontsize=12)
 # axd.legend()
 axd.set_xlabel("Standardized effect on "*L"Q_{ST,u}")
 gcf()
@@ -385,7 +385,7 @@ axc.barh(3 .+ collect(0.2 .* (1:2) .- 0.4),
         )
 axc.vlines(0., 0.4, 3.4, colors="grey", linestyles = "--", label = "")
 axc.set_yticks(1:3)
-axc.set_yticklabels([L"h_d",L"\langle l \rangle", L"r_\theta"],fontsize=12)
+axc.set_yticklabels([L"h_d",L"\langle l \rangle", L"r_\Theta"],fontsize=12)
 axc.legend(loc="upper left")
 axc.set_xlabel("Standardized effect on "*L"Q_{ST,s}")
 

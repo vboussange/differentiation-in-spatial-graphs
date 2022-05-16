@@ -144,7 +144,7 @@ for (i,df) in enumerate(dfg)
         end
     end
     ax[i].set_title(
-            latexstring("r_\\theta = ",(df.rθ[1]), ", m^\\star = ", @sprintf("%.1f",mstar) ),
+            latexstring("r_\\Theta = ",(df.rθ[1]), ", m^\\star = ", @sprintf("%.1f",mstar) ),
             fontsize=12,
             fontweight="bold",
             )
